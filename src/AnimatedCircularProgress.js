@@ -62,10 +62,12 @@ AnimatedCircularProgress.propTypes = {
   tintColor: PropTypes.string,
   backgroundColor: PropTypes.string,
   tension: PropTypes.number,
-  friction: PropTypes.number
+  friction: PropTypes.number,
+  direction: PropTypes.oneOf(['clockwise', 'anti-clockwise'])
 }
 
 AnimatedCircularProgress.defaultProps = {
   tension: 7,
-  friction: 10
+  friction: 10,
+  orientation: 'clockwise'
 };

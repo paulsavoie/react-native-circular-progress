@@ -4,7 +4,7 @@ import MetricsPath from 'art/metrics/path';
 
 export default class CircularProgress extends React.Component {
 
-  circlePath(cx, cy, r, startDegree, endDegree) {
+  circlePath(cx, cy, r, startDegree, endDegree, clockwise) {
 
     let p = Path();
     if (Platform.OS === 'ios') {
@@ -15,7 +15,8 @@ export default class CircularProgress extends React.Component {
       // arbitrary circle segments. It also does not support strokeDash.
       // Furthermore, the ART implementation seems to be buggy/different than the iOS one.
       // MoveTo is not needed on Android 
-      p.path.push(4, cx, cy, r, startDegree * Math.PI / 180, (startDegree - endDegree) * Math.PI / 180, 0);
+      let diff = clockwise ? endDegree : (startDegree - endDegree);
+      p.path.push(4, cx, cy, r, startDegree * Math.PI / 180, diff * Math.PI / 180, 0);
     }
     return p;
   }
@@ -31,11 +32,11 @@ export default class CircularProgress extends React.Component {
   }
 
   render() {
-    const { size, width, tintColor, backgroundColor, style, rotation, children } = this.props;
+    const { size, width, tintColor, backgroundColor, style, rotation, children, direction } = this.props;
     const backgroundPath = this.circlePath(size / 2, size / 2, size / 2 - width / 2, 0, 360);
 
     const fill = this.extractFill(this.props.fill);
-    const circlePath = this.circlePath(size / 2, size / 2, size / 2 - width / 2, 0, 360 * fill / 100);
+    const circlePath = this.circlePath(size / 2, size / 2, size / 2 - width / 2, 0, 360 * fill / 100, direction == 'clockwise');
 
     return (
       <View style={style}>
@@ -68,11 +69,13 @@ CircularProgress.propTypes = {
   tintColor: PropTypes.string,
   backgroundColor: PropTypes.string,
   rotation: PropTypes.number,
-  children: PropTypes.func
+  children: PropTypes.func,
+  direction: PropTypes.oneOf(['clockwise', 'anti-clockwise'])
 }
 
 CircularProgress.defaultProps = {
   tintColor: 'black',
   backgroundColor: '#e4e4e4',
-  rotation: 90
+  rotation: 90,
+  orientation: 'clockwise'
 }

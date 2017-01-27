@@ -9,8 +9,12 @@ export default class CircularProgress extends React.Component {
 
     let p = Path();
     if (Platform.OS === 'ios') {
+      let dx = r * Math.cos((360 - endDegree) * Math.PI / 180);
+      let dy = r * Math.sin((360 - endDegree) * Math.PI / 180);
       p.path.push(0, cx + r, cy);
-      p.path.push(4, cx, cy, r, startDegree * Math.PI / 180, endDegree * Math.PI / 180, 1);
+      p.path.push(4, cx, cy, r, (360 - startDegree) * Math.PI / 180, (360 - endDegree) * Math.PI / 180, 0);
+      //p.path.push(4, cx, cy, r, startDegree * Math.PI / 180, endDegree * Math.PI / 180, 1);
+      
     } else {
       // For Android we have to resort to drawing low-level Path primitives, as ART does not support 
       // arbitrary circle segments. It also does not support strokeDash.

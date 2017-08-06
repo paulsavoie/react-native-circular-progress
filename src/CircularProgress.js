@@ -21,6 +21,7 @@ export default class CircularProgress extends React.Component {
       // Furthermore, the ART implementation seems to be buggy/different than the iOS one.
       // MoveTo is not needed on Android 
       let diff = clockwise ? endDegree : (startDegree - endDegree);
+      p.path.push(0, cx + r, cy);
       p.path.push(4, cx, cy, r, startDegree * Math.PI / 180, diff * Math.PI / 180, 0);
     }
     return p;

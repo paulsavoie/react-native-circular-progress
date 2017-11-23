@@ -68,7 +68,7 @@ AnimatedCircularProgress.propTypes = {
   backgroundColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   tension: PropTypes.number,
   friction: PropTypes.number,
-  direction: PropTypes.oneOf(['clockwise', 'anti-clockwise'])
+  direction: PropTypes.oneOf(['clockwise', 'anti-clockwise']),
   onAnimationComplete: PropTypes.func,
   onLinearAnimationComplete: PropTypes.func
 }
